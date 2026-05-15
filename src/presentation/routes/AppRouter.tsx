@@ -4,6 +4,8 @@ import { Layout } from "../components/layout/Layout";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { LoginPage } from "../pages/LoginPage";
+import { ForgotPasswordPage } from "../pages/ForgotPasswordPage";
+import { ResetPasswordPage } from "../pages/ResetPasswordPage";
 import { LandingPage } from "../pages/LandingPage";
 import { Button } from "@/components/ui/button";
 
@@ -58,8 +60,12 @@ export function AppRouter() {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
+          {/* Prioridad absoluta a la ruta de recuperación para evitar rebotes al dashboard */}
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+
           <Route path="/" element={user ? <Navigate to="/dashboard/organizations" replace /> : <LandingPage />} />
           <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
+          <Route path="/forgot-password" element={user ? <Navigate to="/dashboard" replace /> : <ForgotPasswordPage />} />
 
           {/* Unified dashboard route - ALL protected pages under one layout */}
           <Route path="/dashboard" element={

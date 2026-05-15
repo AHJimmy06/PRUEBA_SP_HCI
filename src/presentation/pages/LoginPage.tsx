@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../../infrastructure/config/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -113,9 +114,19 @@ export function LoginPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1.5">
-                   <Lock size={12} /> Contraseña
-                </label>
+                <div className="flex items-center justify-between ml-1">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <Lock size={12} /> Contraseña
+                  </label>
+                  {mode === "login" && (
+                    <Link 
+                      to="/forgot-password" 
+                      className="text-[10px] font-bold text-primary/60 hover:text-primary transition-colors uppercase tracking-widest"
+                    >
+                      ¿Olvidaste tu contraseña?
+                    </Link>
+                  )}
+                </div>
                 <Input 
                   type="password" 
                   value={password}

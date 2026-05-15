@@ -25,7 +25,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     // 2. Escuchar cambios en la autenticación
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        // No actualizamos el loading a false inmediatamente si queremos manejar algo específico,
+        // pero por ahora aseguramos que el estado se actualice sin redirigir agresivamente.
+        console.log('Evento de recuperación de contraseña detectado');
+      }
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
